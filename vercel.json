@@ -9,7 +9,7 @@
     "routes": [
       {
         "src": "/(.*)",
-        "dest": "CLIENT/src/store/globalStore.js"
+        "dest": "./src/store/globalStore.js"
       }
     ]
   } 
