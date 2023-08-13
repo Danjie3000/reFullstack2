@@ -38,7 +38,7 @@ router.post('/login', async (req, res) => { // Authenticate.
             message: "Invalid Credentials."});
     };
     // Generates JWT token. Authorization.
-    const token = await jwt.sign({user}, process.env.TOKEN_SECRET, {expiresIn: 43200}); // Token works expires after 12 hours.
+    const token = await jwt.sign({ user, username: user.name }, process.env.TOKEN_SECRET, {expiresIn: 43200}); // Token works expires after 12 hours.
     res.json({token});
 });
 

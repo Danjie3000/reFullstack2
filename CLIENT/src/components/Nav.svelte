@@ -4,6 +4,8 @@
 
   const loggedIn = writable(false);
 
+  let localDateTime = '';
+
   // Log out handler function.
   async function logout() {
     localStorage.removeItem('token'); // Clear the token from local storage.
@@ -14,12 +16,27 @@
   onMount(() => {
     const token = localStorage.getItem('token');
     loggedIn.set(!!token); // Updates the login status based on the presence of a valid token.
+
+    const updateLocalDateTime = () => {
+      const now = new Date();
+      localDateTime = now.toLocaleString();
+    };
+
+    updateLocalDateTime();
+    const interval = setInterval(updateLocalDateTime, 1000);
+
+    return () => {
+      clearInterval(interval);
+    };
   });
+
+  
 </script>
 
 <nav class='navbar'>
   <div class='container'>
     <ul class='nav-links'>
+      <li class='local-date-time'>{localDateTime}</li> <!-- Display local date and time -->
       {#if $loggedIn} <!-- Show the logged-in navigation links -->
         <a href='/home' class='cta-btn'>| Hjem |</a>
         <a href='/register' class='cta-btn'>| Registrer |</a>
@@ -54,7 +71,7 @@
     margin-right: 20px;
   }
 
-  .nav-links a {
+  .nav-links a, .local-date-time {
     color: firebrick;
     text-decoration: none;
     font-weight: bold;
