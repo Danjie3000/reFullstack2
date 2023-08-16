@@ -29,8 +29,6 @@
       clearInterval(interval);
     };
   });
-
-  
 </script>
 
 <nav class='navbar'>
@@ -71,7 +69,7 @@
     margin-right: 20px;
   }
 
-  .nav-links a, .local-date-time {
+  .nav-links a {
     color: firebrick;
     text-decoration: none;
     font-weight: bold;
@@ -79,6 +77,11 @@
     line-height: 1;
     margin-right: 20px;
     display: inline-block;
+    width: 100px;
+  }
+
+  .local-date-time {
+    line-height: 1;
     width: 100px;
   }
 

@@ -8,7 +8,6 @@ const app = express();
 app.use(express.json());
 app.use(cors({credentials: true, origin: true}));
 app.use(express.urlencoded({ extended: true }));
-app.use(userRouter);
 
 //                          Database v
 async function connect() {
@@ -54,8 +53,8 @@ io.on('connection', socket => {
 
 //import forgotPasswordMailer from './util/mailer.js'
 import userRouter from './routers/userRouter.js';
-//import todoRouter from './routers/todoRouter.js';
-app.use(userRouter);
+import todoRouter from './routers/todoRouter.js';
+app.use(userRouter, todoRouter);
 
 /************************************************************************************************************************************/
 

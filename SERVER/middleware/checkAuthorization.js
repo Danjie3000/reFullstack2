@@ -2,7 +2,6 @@ import jwt from 'jsonwebtoken';
 
 const checkAuth = async (req, res, next) => {
     const token = req.headers['token']
-    console.log(token)
     if(!token) {
         return res.status(400).json({
             message: "No token found."
