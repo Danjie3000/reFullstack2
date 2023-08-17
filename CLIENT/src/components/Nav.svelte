@@ -38,8 +38,8 @@
       {#if $loggedIn} <!-- Show the logged-in navigation links -->
         <a href='/home' class='cta-btn'>| Hjem |</a>
         <a href='/register' class='cta-btn'>| Registrer |</a>
-        <a on:click='{logout}' class='cta-btn'>| Log ud |</a>
         <a href='/todo' class='cta-btn'>| Todo |</a>
+        <a on:click='{logout}' class='cta-btn'>| Log ud |</a>
       {:else} <!-- Show the not logged-in navigation links -->
         <a href='/' class='cta-btn'>| Log ind |</a>
         <a href='/chat' class='cta-btn'>| Live Chat |</a>
