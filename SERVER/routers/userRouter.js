@@ -19,7 +19,7 @@ router.post('/register', checkAuth, async (req, res) => { // Only possible to re
         const { password, ...data } = await result.toJSON();
 
         // Generate JWT token. Authorization.
-        const token = await jwt.sign({ user: data }, process.env.TOKEN_SECRET, { expiresIn: 43200 }); // Token works expires after 12 hours.
+        const token = await jwt.sign({ user: data }, process.env.TOKEN_SECRET, { expiresIn: 43200 }); // Token expires after 12 hours.
         res.json({ user: data, token });
         console.log("New user added.");
 
@@ -38,7 +38,7 @@ router.post('/login', async (req, res) => { // Authenticate.
             message: "Invalid Credentials."});
     };
     // Generates JWT token. Authorization.
-    const token = await jwt.sign({ user, username: user.name }, process.env.TOKEN_SECRET, {expiresIn: 43200}); // Token works expires after 12 hours.
+    const token = await jwt.sign({ user, username: user.name }, process.env.TOKEN_SECRET, {expiresIn: 43200}); // Token expires after 12 hours.
     res.json({token});
 });
 

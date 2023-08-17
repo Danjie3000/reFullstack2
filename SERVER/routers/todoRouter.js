@@ -1,17 +1,41 @@
 import { Router } from 'express';
 import checkAuth from '../middleware/checkAuthorization.js';
-import connection from '../database/connectionDB.js';
+import connection from '../database/connectionDB.js'; 
 
 const router = Router();
 
-router.get('/todo', checkAuth, async (req, res) => {
+router.get('/gettodos', checkAuth, async (req, res) => {
     try {
-        const [rows, fields] = await connection.execute("SELECT * FROM todos;");
+        const [rows, fields] = await connection.execute(`
+            SELECT * 
+            FROM todos
+        `);
+
+        if (rows.length === 0) {
+            return res.status(404).json({ message: "No todos found" });
+        }
+
         return res.json(rows);
     } catch (error) {
         console.error(error);
-        res.status(500).json({ message: 'Error fetching todos' });
+        res.status(500).json({ message: "Error fetching todos: ", error: error.message });
     }
+});
+
+router.get('/todo', checkAuth, async (req, res) => {
+    try {
+        const [rows, fields] = await connection.execute(`
+            SELECT t.* 
+            FROM todo AS t
+            INNER JOIN user_todos AS ut ON t.id = ut.todo_id
+            WHERE ut.user_id = ?
+        `, [userId]);
+
+        return res.json(rows);
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ message: "Error fetching todos."});
+    };
 });
 
 router.get('/todo/:id', checkAuth, async (req, res) => {
@@ -22,8 +46,8 @@ router.get('/todo/:id', checkAuth, async (req, res) => {
         return res.json(todo);
     } catch (error) {
         console.error(error);
-        res.status(500).json({ message: 'Error fetching todo' });
-    }
+        res.status(500).json({ message: "Error fetching todo" });
+    };
 });
 
 router.post('/todo', checkAuth, async (req, res) => {
@@ -31,25 +55,37 @@ router.post('/todo', checkAuth, async (req, res) => {
     const query = "INSERT INTO todos (title, completed) VALUES (?, ?);";
     try {
         await connection.execute(query, [title, false]);
-        console.log('Todo inserted successfully');
-        return res.json({ message: 'Todo inserted successfully' });
+        console.log("Todo inserted successfully");
+        return res.json({ message: "Todo inserted successfully"});
     } catch (error) {
         console.error(error);
-        res.status(500).json({ message: 'Error creating todo' });
-    }
+        res.status(500).json({ message: "Error creating todo"});
+    };
 });
 
 router.put('/todo/:id', checkAuth, async (req, res) => {
     const { id } = req.params;
-    const query = "UPDATE todos SET completed = NOT completed WHERE id = ?";
+    const { title, completed } = req.body; // Extracts both title and completed properties from MySQL.
+    let query = "UPDATE todos SET";
+    const queryParams = [];
+    if (title !== undefined) {
+        query += " title = ?,";
+        queryParams.push(title);
+    };
+    if (completed !== undefined) {
+        query += " completed = ?,";
+        queryParams.push(completed);
+    };
+    query = query.slice(0, -1) + " WHERE id = ?"; // Removes the trailing comma and complete the query.
+    queryParams.push(id);
     try {
-        await connection.execute(query, [id]);
-        const updatedTodo = { id, completed: !todo[index].completed };
+        await connection.execute(query, queryParams);
+        const updatedTodo = { id, title, completed };
         return res.json(updatedTodo);
     } catch (error) {
         console.error(error);
-        res.status(500).json({ message: 'Error updating todo' });
-    }
+        res.status(500).json({ message: "Error updating todo"});
+    };
 });
 
 router.delete('/todo/:id', checkAuth, async (req, res) => {
@@ -57,11 +93,12 @@ router.delete('/todo/:id', checkAuth, async (req, res) => {
     const query = "DELETE FROM todos WHERE id = ?";
     try {
         await connection.execute(query, [id]);
-        return res.json({ message: 'Todo deleted successfully' });
+        console.log("Todo deleted successfully.")
+        return res.json({ message: "Todo deleted successfully"});
     } catch (error) {
         console.error(error);
-        res.status(500).json({ message: 'Error deleting todo' });
-    }
-});
+        res.status(500).json({ message: "Error deleting todo"});
+    };
+}); 
 
 export default router;

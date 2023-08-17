@@ -9,7 +9,7 @@ app.use(express.json());
 app.use(cors({credentials: true, origin: true}));
 app.use(express.urlencoded({ extended: true }));
 
-//                          Database v
+//                          Mongo Database for Users v
 async function connect() {
     try {
         await mongoose.connect(process.env.MONGODB_CONNECT, {
@@ -22,7 +22,7 @@ async function connect() {
     };
 };
 connect();
-//                          Database ^
+//                          Mongo Database for Users^
 
 //                          Socket v
 import http from "http";
@@ -54,7 +54,8 @@ io.on('connection', socket => {
 //import forgotPasswordMailer from './util/mailer.js'
 import userRouter from './routers/userRouter.js';
 import todoRouter from './routers/todoRouter.js';
-app.use(userRouter, todoRouter);
+app.use(userRouter);
+app.use(todoRouter);
 
 /************************************************************************************************************************************/
 

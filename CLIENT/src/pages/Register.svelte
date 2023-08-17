@@ -11,7 +11,7 @@
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
-        token: localStorage.getItem('token') // Gets token value.
+        'Authorization': `Bearer ${localStorage.getItem('token')}` // Gets token value.
         },
       body: JSON.stringify({
         name,
@@ -29,7 +29,7 @@
   }
 }
 </script>
-  <h1>Registrer</h1>
+  <h1>Registrer ny bruger.</h1>
   
   <form on:submit|preventDefault='{register}'>
     <label>
