@@ -10,16 +10,14 @@ router.get('/gettodos', checkAuth, async (req, res) => {
             SELECT * 
             FROM todos
         `);
-
         if (rows.length === 0) {
             return res.status(404).json({ message: "No todos found" });
         }
-
         return res.json(rows);
     } catch (error) {
         console.error(error);
         res.status(500).json({ message: "Error fetching todos: ", error: error.message });
-    }
+    };
 });
 
 router.get('/todo', checkAuth, async (req, res) => {
@@ -30,7 +28,6 @@ router.get('/todo', checkAuth, async (req, res) => {
             INNER JOIN user_todos AS ut ON t.id = ut.todo_id
             WHERE ut.user_id = ?
         `, [userId]);
-
         return res.json(rows);
     } catch (error) {
         console.error(error);
@@ -80,6 +77,7 @@ router.put('/todo/:id', checkAuth, async (req, res) => {
     queryParams.push(id);
     try {
         await connection.execute(query, queryParams);
+        console.log("Todo updated successfully");
         const updatedTodo = { id, title, completed };
         return res.json(updatedTodo);
     } catch (error) {

@@ -16,18 +16,18 @@ async function connect() {
         useNewUrlParser: true,
         useUnifiedTopology: true
         }); 
-    console.log('Connected to MongoDB');
+    console.log("Connected to MongoDB");
     } catch (error) {
-        console.log('Error connecting to MongoDB', error.message);
+        console.log("Error connecting to MongoDB: ", error.message);
     };
 };
 connect();
 //                          Mongo Database for Users^
 
 //                          Socket v
-import http from "http";
+import http from 'http';
 const server = http.createServer(app);
-import { Server } from "socket.io";
+import { Server } from 'socket.io';
 const io = new Server(server, {
     cors: {
         origin: "*",
@@ -36,7 +36,6 @@ const io = new Server(server, {
 });
 
 const users = {}; // Temporary user for chatting.
-
 io.on('connection', socket => {
     socket.on('new-user', name => {
         users[socket.id] = name
