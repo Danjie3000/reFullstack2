@@ -14,6 +14,8 @@
             const payload = JSON.parse(atob(payloadBase64));
             username = payload.username;
             await fetchTodos();
+        } else {
+            window.location.href = '/';
         }
     });
 
@@ -127,6 +129,11 @@
         todo.editing = false;
         editingTodoId = null;
     };
+
+    function printList() {
+    window.print()
+  };
+
 </script>
 
 <h1>Todos for {username}</h1>
@@ -171,6 +178,8 @@
         </li>
     {/each}
 </ul>
+
+<button on:click={printList}>Print ToDo siden</button>
 
 <style>
     form {

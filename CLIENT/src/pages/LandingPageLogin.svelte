@@ -7,7 +7,7 @@
 
   // Function to handle login
   async function login() {
-    const response = await fetch($BASE_URL + '/login', {
+    const response = await fetch($BASE_URL + '/', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'
@@ -27,7 +27,9 @@
     if (response.ok) {
       loggedIn.set(true); // Update the login status to true.
       window.location.href = '/home';
-    };
+    } else (
+      alert("Login mislykkedes! Email eller Password er forkert.")
+    );
   };
 
   let email = '';
@@ -54,4 +56,3 @@
   
     <button type='submit'>Log ind</button>
   </form>
-

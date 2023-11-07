@@ -7,7 +7,7 @@
   let messageInput;
 
   const socket = io($BASE_URL);
-  let name = prompt("What is your name?") || 'Anonymous'; // If no name is added, user can be anonymous.
+  let name = prompt("Hvad er dit navn?") || 'Anonym'; // If no name is added, user can be anonymous.
 
   onMount(() => {
     socket.emit('new-user', name);
@@ -45,3 +45,4 @@
   <input type='text' bind:this={messageInput} id='message-input'>
   <button type='submit' id='send-button'>Send</button>
 </form>
+

@@ -28,7 +28,7 @@ router.post('/register', checkAuth, async (req, res) => { // Only possible to re
     };
 });
 
-router.post('/login', async (req, res) => { // Authenticate.
+router.post('/', async (req, res) => { // Authenticate.
     const user = await User.findOne({email: req.body.email});
     if(!user) {
         return res.status(400).send({
