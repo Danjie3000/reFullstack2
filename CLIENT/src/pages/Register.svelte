@@ -40,22 +40,23 @@
       window.location.href = '/home';
     } else {
       console.error("Registration failed: ", data.error); // Handles registration error.
-  }
+    }
   };
 </script>
   <h1>Registrer ny bruger.</h1>
   
   <form on:submit|preventDefault='{register}'>
     <label>
-      Navn: <input type='text' bind:value='{name}' />
+      Navn: <input type='text' required bind:value='{name}' />
     </label>
   
     <label>
-      Email: <input type='email' bind:value='{email}' />
+      Email: <input type='email' required bind:value='{email}' />
     </label>
   
     <label>
       Password: <input type='password' bind:value='{password}' />
     </label>
+
     <button type='submit'>Tilmeld</button>
   </form>
