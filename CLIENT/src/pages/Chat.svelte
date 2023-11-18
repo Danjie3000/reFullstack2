@@ -42,7 +42,8 @@
 
 <div id='message-container' bind:this={messageContainer}></div>
 <form on:submit={sendMessage} id='send-container'>
-  <input type='text' bind:this={messageInput} id='message-input'>
+  <label>
+    Skriv din besked her: <input type='text' bind:this={messageInput} id='message-input'>
+  </label>
   <button type='submit' id='send-button'>Send</button>
 </form>
-

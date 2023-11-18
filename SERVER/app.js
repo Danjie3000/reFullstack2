@@ -58,11 +58,10 @@ app.use(todoRouter);
 
 /************************************************************************************************************************************/
 
-const PORT = 8080;
-server.listen(PORT, (error) => {
+server.listen(process.env.PORT, (error) => {
     if (error) {
         console.log("error: ", error);
         return;
         }
-        console.log("The server is running on port: ", PORT);
+        console.log("The server is running on port: ", process.env.PORT);
 });

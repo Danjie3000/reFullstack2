@@ -4,7 +4,7 @@ import connection from '../database/connectionDB.js';
 
 const router = Router();
 
-router.get('/gettodos', checkAuth, async (req, res) => {
+router.get('/api/gettodos', checkAuth, async (req, res) => {
     try {
         const [rows, fields] = await connection.execute(`
             SELECT * 
@@ -20,7 +20,7 @@ router.get('/gettodos', checkAuth, async (req, res) => {
     };
 });
 
-router.get('/todo', checkAuth, async (req, res) => {
+router.get('/api/todo', checkAuth, async (req, res) => {
     try {
         const [rows, fields] = await connection.execute(`
             SELECT t.* 
@@ -35,7 +35,7 @@ router.get('/todo', checkAuth, async (req, res) => {
     };
 });
 
-router.get('/todo/:id', checkAuth, async (req, res) => {
+router.get('/api/todo/:id', checkAuth, async (req, res) => {
     const { id } = req.params;
     try {
         const [rows, fields] = await connection.execute("SELECT * FROM todos WHERE id = ?", [id]);
@@ -47,7 +47,7 @@ router.get('/todo/:id', checkAuth, async (req, res) => {
     };
 });
 
-router.post('/todo', checkAuth, async (req, res) => {
+router.post('/api/todo', checkAuth, async (req, res) => {
     const { title } = req.body;
     const query = "INSERT INTO todos (title, completed) VALUES (?, ?);";
     try {
@@ -60,7 +60,7 @@ router.post('/todo', checkAuth, async (req, res) => {
     };
 });
 
-router.put('/todo/:id', checkAuth, async (req, res) => {
+router.put('/api/todo/:id', checkAuth, async (req, res) => {
     const { id } = req.params;
     const { title, completed } = req.body; // Extracts both title and completed properties from MySQL.
     let query = "UPDATE todos SET";
@@ -86,7 +86,7 @@ router.put('/todo/:id', checkAuth, async (req, res) => {
     };
 });
 
-router.delete('/todo/:id', checkAuth, async (req, res) => {
+router.delete('/api/todo/:id', checkAuth, async (req, res) => {
     const { id } = req.params;
     const query = "DELETE FROM todos WHERE id = ?";
     try {

@@ -21,7 +21,7 @@
 
     async function fetchTodos() {
         try {
-            const response = await fetch(`${$BASE_URL}/gettodos`, {
+            const response = await fetch(`${$BASE_URL}/api/gettodos`, {
                 headers: {
                     Authorization: `Bearer ${localStorage.getItem("token")}`,
                 },
@@ -38,7 +38,7 @@
 
     async function addTodo() {
         try {
-            const response = await fetch(`${$BASE_URL}/todo`, {
+            const response = await fetch(`${$BASE_URL}/api/todo`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -59,7 +59,7 @@
 
     async function toggleComplete(id, completed) {
         try {
-            const response = await fetch(`${$BASE_URL}/todo/${id}`, {
+            const response = await fetch(`${$BASE_URL}/api/todo/${id}`, {
                 method: 'PUT',
                 headers: {
                     'Content-Type': 'application/json',
@@ -86,7 +86,7 @@
 
     async function saveUpdate(todo, id) {
         try {
-            const response = await fetch(`${$BASE_URL}/todo/${id}`, {
+            const response = await fetch(`${$BASE_URL}/api/todo/${id}`, {
                 method: 'PUT',
                 headers: {
                     'Content-Type': 'application/json',
@@ -109,7 +109,7 @@
 
     async function deleteTodo(id) {
         try {
-            const response = await fetch(`${$BASE_URL}/todo/${id}`, {
+            const response = await fetch(`${$BASE_URL}/api/todo/${id}`, {
                 method: 'DELETE',
                 headers: {
                     Authorization: `Bearer ${localStorage.getItem('token')}`,

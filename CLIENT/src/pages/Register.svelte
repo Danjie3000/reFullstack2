@@ -36,6 +36,7 @@
     const data = await response.json();
     if (response.ok) {
       const jwtToken = data.token;
+      alert ("Ny bruger tilføjet.")
       window.location.href = '/home';
     } else {
       console.error("Registration failed: ", data.error); // Handles registration error.
@@ -46,15 +47,15 @@
   
   <form on:submit|preventDefault='{register}'>
     <label>
-      Navn:<input type='text' bind:value='{name}' />
+      Navn: <input type='text' bind:value='{name}' />
     </label>
   
     <label>
-      Email:<input type='email' bind:value='{email}' />
+      Email: <input type='email' bind:value='{email}' />
     </label>
   
     <label>
-      Password:<input type='password' bind:value='{password}' />
+      Password: <input type='password' bind:value='{password}' />
     </label>
     <button type='submit'>Tilmeld</button>
   </form>
