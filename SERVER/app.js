@@ -9,6 +9,17 @@ app.use(express.json());
 app.use(cors({credentials: true, origin: true}));
 app.use(express.urlencoded({ extended: true }));
 
+//                          Limiting API requests v
+import rateLimit from 'express-rate-limit';
+const apiLimiter = rateLimit({
+	windowMs: 15 * 60 * 1000, // 15 min.
+	max: 100, // Limit each IP to 100 requests per `window`, per 15 minutes because of the windowMs.
+	standardHeaders: true, // Return rate limit info in the `RateLimit-*` headers
+	legacyHeaders: false, // Disable the `X-RateLimit-*` headers
+});
+app.use(apiLimiter);
+//                          Limiting API requests ^
+
 //                          Mongo Database for Users v
 async function connect() {
     try {
@@ -22,7 +33,7 @@ async function connect() {
     };
 };
 connect();
-//                          Mongo Database for Users^
+//                          Mongo Database for Users ^
 
 //                          Socket v
 import http from 'http';
@@ -50,7 +61,6 @@ io.on('connection', socket => {
 });
 //                          Socket ^
 
-//import forgotPasswordMailer from './util/mailer.js'
 import userRouter from './routers/userRouter.js';
 import todoRouter from './routers/todoRouter.js';
 app.use(userRouter);
